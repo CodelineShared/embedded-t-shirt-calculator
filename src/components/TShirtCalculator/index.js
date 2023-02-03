@@ -1,18 +1,48 @@
-import {createContext, useContext, useState} from 'react';
+import {createContext, useContext, useEffect, useState} from 'react';
 import {Box} from "@mui/material";
 import OrderSizeInputGroup from "./Helpers/OrderSizeInputGroup";
 import OrderSizesGroup from "./Helpers/OrderSizesGroup";
+import {SHARES} from "./variables";
 
 export const TShirtCalculatorContext = createContext({
     orderSize: 0,
-    setOrderSize: (value) => {}
+    setOrderSize: (value) => {},
+
+    remainder: 0,
+    setRemainder: (value) => {},
 });
 export const useTShirtCalculatorContext = () =>
     useContext(TShirtCalculatorContext);
 
 function TShirtCalculator({ maxWidth = '500px' }) {
     const [orderSize, setOrderSize] = useState(0);
-    const initialContext = { orderSize, setOrderSize };
+    const [calculatedOrderSize, setCalculatedOrderSize] = useState(0);
+    const [remainder, setRemainder] = useState(0);
+
+    const initialContext = {
+        orderSize, setOrderSize,
+        remainder, setRemainder,
+    };
+
+    useEffect(() => {
+        setCalculatedOrderSize(() => {
+            return SHARES.reduce((acc, share) => {
+                return acc + Math.floor(share * orderSize);
+            }, 0);
+        })
+
+        return () => {
+            setCalculatedOrderSize(0);
+        }
+    }, [orderSize]);
+
+    useEffect(() => {
+        setRemainder(orderSize - calculatedOrderSize)
+
+        return () => {
+            setRemainder(0);
+        }
+    }, [orderSize, calculatedOrderSize]);
 
     return (
         <TShirtCalculatorContext.Provider value={initialContext}>

@@ -7,3 +7,5 @@ export const SIZE_SHARES = new Map([
 ]); // 100% of the total
 
 export const SIZES = Array.from(SIZE_SHARES.keys());
+export const SHARES = Array.from(SIZE_SHARES.values());
+export const APPLY_SHARE_REMAINDER_TO = 'L';
