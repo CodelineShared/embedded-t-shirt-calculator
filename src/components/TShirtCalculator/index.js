@@ -3,6 +3,7 @@ import {Box} from "@mui/material";
 import OrderSizeInputGroup from "./Helpers/OrderSizeInputGroup";
 import OrderSizesGroup from "./Helpers/OrderSizesGroup";
 import {SHARES} from "./variables";
+import {ROOT_ELEMENT_DEFAULT_MAX_WIDTH} from "../../index";
 
 export const TShirtCalculatorContext = createContext({
     orderSize: 0,
@@ -14,7 +15,7 @@ export const TShirtCalculatorContext = createContext({
 export const useTShirtCalculatorContext = () =>
     useContext(TShirtCalculatorContext);
 
-function TShirtCalculator({ maxWidth = '500px' }) {
+function TShirtCalculator({ maxWidth = ROOT_ELEMENT_DEFAULT_MAX_WIDTH }) {
     const [orderSize, setOrderSize] = useState(0);
     const [calculatedOrderSize, setCalculatedOrderSize] = useState(0);
     const [remainder, setRemainder] = useState(0);

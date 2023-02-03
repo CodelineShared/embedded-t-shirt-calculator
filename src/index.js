@@ -4,7 +4,9 @@ import TShirtCalculator from "./components/TShirtCalculator";
 
 export const ROOT_ELEMENT_ID = 't-shirt-calculator';
 export const ROOT_ELEMENT = document.getElementById(ROOT_ELEMENT_ID);
-const ROOT_ELEMENT_MAX_WIDTH = ROOT_ELEMENT.getAttribute('data-max-width') || '500px';
+export const ROOT_ELEMENT_DEFAULT_MAX_WIDTH = '600px';
+
+const ROOT_ELEMENT_MAX_WIDTH = ROOT_ELEMENT.getAttribute('data-max-width') || ROOT_ELEMENT_DEFAULT_MAX_WIDTH;
 const root = ReactDOM.createRoot(ROOT_ELEMENT);
 
 root.render(

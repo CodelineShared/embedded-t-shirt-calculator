@@ -18,14 +18,15 @@ https://scintillating-tarsier-b55c2d.netlify.app/
 <body style="width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center;">
 
 <!-- 1. Place a <div> widget element somewhere on your blog. -->
-<!-- 2. The data-max-width attribute is optional. Widget default width = 500px. If you want the full width, then pass "100%".  -->
+<!-- 2. The data-max-width attribute is optional. Widget default width = 600px. If you want the full width, then pass "100%".  -->
 <!--    So it will be <div id="t-shirt-calculator" data-max-width="100%"></div>.  -->
-<div id="t-shirt-calculator" data-max-width="500px"></div>
+<div id="t-shirt-calculator" data-max-width="600px"></div>
 
 <!-- 3. Build the widget: npm i && npm run build.  -->
 <!-- 4. Upload the widget build ("./build" folder) to your server.  -->
 <!-- 5. Paste the build path into src="...".  -->
-<script src="https://scintillating-tarsier-b55c2d.netlify.app/static/js/main.9eb8fe1c.js"></script>
+<!--    Example: <script src="https://scintillating-tarsier-b55c2d.netlify.app/static/js/main.c07c563c.js"></script>  -->
+<script src="..."></script>
 </body>
 </html>
 ```
