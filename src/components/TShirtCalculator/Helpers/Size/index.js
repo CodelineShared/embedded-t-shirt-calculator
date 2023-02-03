@@ -1,5 +1,5 @@
 import {Box, TextField, Typography} from "@mui/material";
-import {APPLY_SHARE_REMAINDER_TO, SIZE_SHARES} from "../../variables";
+import {APPLY_SHARE_REMAINDER_TO, MIN_SIZE_FIELD_WIDTH, SIZE_SHARES} from "../../variables";
 import {makeStyles} from "@material-ui/core/styles";
 import {formatNumber} from "../../../../helpers";
 import {useTShirtCalculatorContext} from "../../index";
@@ -32,7 +32,9 @@ function Size({ size, total }) {
              flexDirection="column"
              alignItems="center"
              justifyContent="center"
-             flex="1 1 80px"
+             flexGrow={1}
+             flexShrink={1}
+             flexBasis={MIN_SIZE_FIELD_WIDTH}
              gap={1}
         >
             <Box backgroundColor="white" borderRadius={1}>

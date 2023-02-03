@@ -9,3 +9,4 @@ export const SIZE_SHARES = new Map([
 export const SIZES = Array.from(SIZE_SHARES.keys());
 export const SHARES = Array.from(SIZE_SHARES.values());
 export const APPLY_SHARE_REMAINDER_TO = 'L';
+export const MIN_SIZE_FIELD_WIDTH = '80px';
