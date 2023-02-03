@@ -1,24 +1,8 @@
 import {Box, IconButton, TextField} from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import {makeStyles} from "@material-ui/core/styles";
 import {useTShirtCalculatorContext} from "../../index";
-
-const useStyles = makeStyles({
-    input: {
-        '& input[type=number]': {
-            '-moz-appearance': 'textfield'
-        },
-        '& input[type=number]::-webkit-outer-spin-button': {
-            '-webkit-appearance': 'none',
-            margin: 0
-        },
-        '& input[type=number]::-webkit-inner-spin-button': {
-            '-webkit-appearance': 'none',
-            margin: 0
-        }
-    },
-});
+import { NumericFormat } from "react-number-format";
 
 const STEP = 10;
 const MIN_ORDER_SIZE = 0;
@@ -26,26 +10,6 @@ const MAX_ORDER_SIZE = 1000000;
 
 function OrderSizeInput() {
     const {orderSize, setOrderSize} = useTShirtCalculatorContext();
-    const classes = useStyles();
-
-    function setValue(value) {
-        if(isNaN(value)) {
-            setOrderSize(0);
-            return;
-        }
-
-        switch (true) {
-            case value < MIN_ORDER_SIZE:
-                setOrderSize(MIN_ORDER_SIZE);
-                break;
-            case value > MAX_ORDER_SIZE:
-                setOrderSize(MAX_ORDER_SIZE);
-                break;
-            default:
-                setOrderSize(value);
-                break;
-        }
-    }
 
     function onIncrement() {
         const targetValue = orderSize + STEP;
@@ -57,17 +21,43 @@ function OrderSizeInput() {
         setValue(targetValue);
     }
 
-    function isDecrementDisabled() {
-        return orderSize === 0;
+    function isIncrementDisabled() {
+        return orderSize === MAX_ORDER_SIZE;
     }
 
-    function onChange(event) {
-        const value = parseInt(event.target.value);
+    function isDecrementDisabled() {
+        return orderSize === MIN_ORDER_SIZE;
+    }
+
+    function onChange(value) {
+        value = parseInt(value);
         setValue(value);
     }
 
-    function valueFormatter() {
-        return Number(orderSize).toString();
+    function setValue(value) {
+        if(isNaN(value)) {
+            setOrderSize(0);
+            return;
+        }
+
+        setOrderSize(value);
+    }
+
+    function isOrderSizeAllowed(values) {
+        const { formattedValue, floatValue } = values
+
+        switch (true) {
+            case floatValue === null:
+                return formattedValue === ''
+            case floatValue < MIN_ORDER_SIZE:
+                setValue(MIN_ORDER_SIZE);
+                return false;
+            case floatValue > MAX_ORDER_SIZE:
+                setValue(MAX_ORDER_SIZE);
+                return false;
+            default:
+                return true;
+        }
     }
 
     return (
@@ -82,17 +72,24 @@ function OrderSizeInput() {
                 <RemoveIcon />
             </IconButton>
             <Box backgroundColor="white" borderRadius={1}>
-                <TextField
-                    type="number"
-                    className={classes.input}
-                    value={valueFormatter()}
-                    onChange={onChange}
+                <NumericFormat
+                    value={orderSize}
+                    thousandSeparator
+                    decimalScale={0}
+                    allowNegative={false}
+                    allowLeadingZeros={false}
+                    customInput={TextField}
+                    isAllowed={isOrderSizeAllowed}
+                    onValueChange={(values) => {
+                        onChange(values.value)
+                    }}
                 />
             </Box>
             <IconButton
                 color="inherit"
                 aria-label="Add 10 items"
                 component="label"
+                disabled={isIncrementDisabled()}
                 onClick={onIncrement}
             >
                 <AddIcon />
